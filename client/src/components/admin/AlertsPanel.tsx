@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AlertTriangle = () => <span>⚠️</span>;
-const Info = () => <span>ℹ️</span>;
-const ShieldAlert = () => <span>🛡️</span>;
+const AlertTriangle = () => <span role="img" aria-label="alert">⚠️</span>;
+const Info = () => <span role="img" aria-label="info">ℹ️</span>;
+const ShieldAlert = () => <span role="img" aria-label="shield alert">🛡️</span>;
 
 const mockAlerts = [
   { id: 1, type: 'collusion', severity: 'high', msg: 'IP Collusion: Users Player_A, Player_B sharing IP in Room #123', time: '10 mins ago' },

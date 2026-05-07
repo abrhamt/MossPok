@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 
 const lineData = [
   { name: '1', rev: 4000 }, { name: '2', rev: 3000 }, { name: '3', rev: 2000 },
   { name: '4', rev: 2780 }, { name: '5', rev: 1890 }, { name: '6', rev: 2390 },
   { name: '7', rev: 3490 },
-];
-
-const barData = [
-  { name: 'Jan', current: 4000, previous: 2400 },
-  { name: 'Feb', current: 3000, previous: 1398 },
-  { name: 'Mar', current: 2000, previous: 9800 },
 ];
 
 const pieData = [

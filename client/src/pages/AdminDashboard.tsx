@@ -7,11 +7,11 @@ import SpectatorView from '../components/admin/SpectatorView';
 import AlertsPanel from '../components/admin/AlertsPanel';
 
 // Mock simple icons
-const Activity = () => <span>📊</span>;
-const Users = () => <span>👥</span>;
-const CheckSquare = () => <span>✅</span>;
-const Eye = () => <span>👁️</span>;
-const AlertTriangle = () => <span>⚠️</span>;
+const Activity = () => <span role="img" aria-label="activity">📊</span>;
+const Users = () => <span role="img" aria-label="users">👥</span>;
+const CheckSquare = () => <span role="img" aria-label="check square">✅</span>;
+const Eye = () => <span role="img" aria-label="eye">👁️</span>;
+const AlertTriangle = () => <span role="img" aria-label="alert triangle">⚠️</span>;
 
 // Mock context for user
 const mockUser = { isAdmin: true };

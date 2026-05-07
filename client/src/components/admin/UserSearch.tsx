@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const Search = (props: any) => <span {...props}>🔍</span>;
-const ChevronDown = (props: any) => <span {...props}>🔽</span>;
-const ChevronUp = (props: any) => <span {...props}>🔼</span>;
+const Search = (props: any) => <span role="img" aria-label="search" {...props}>🔍</span>;
+const ChevronDown = (props: any) => <span role="img" aria-label="expand" {...props}>🔽</span>;
+const ChevronUp = (props: any) => <span role="img" aria-label="collapse" {...props}>🔼</span>;
 
 const mockUsers = [
   { id: 1, username: 'PokerKing', phone: '+1234567890', balance: 5400, premium: true, lastActive: '2 mins ago' },
