@@ -1,7 +1,7 @@
 [build]
   base = "client/"
   publish = "build/"
-  command = "NODE_OPTIONS=--openssl-legacy-provider npm run build"
+  command = "npm run build"
 
 [[redirects]]
   from = "/api/*"
