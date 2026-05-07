@@ -282,9 +282,9 @@ const init = (socket, io) => {
   }
 
   function removeFromTables(socketId) {
-    for (let i = 0; i < Object.keys(tables).length; i++) {
-      tables[Object.keys(tables)[i]].removePlayer(socketId);
-    }
+    Object.values(tables).forEach((table) => {
+      table.removePlayer(socketId);
+    });
   }
 
   function broadcastToTable(table, message = null, from = null) {
