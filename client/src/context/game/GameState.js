@@ -59,18 +59,15 @@ const GameState = ({ history, children }) => {
       window.addEventListener('close', leaveTable);
 
       socket.on(TABLE_UPDATED, ({ table, message, from }) => {
-        console.log(TABLE_UPDATED, table, message, from);
         setCurrentTable(table);
         message && addMessage(message);
       });
 
       socket.on(TABLE_JOINED, ({ tables, tableId }) => {
-        console.log(TABLE_JOINED, tables, tableId);
         setCurrentTable(tables[tableId]);
       });
 
       socket.on(TABLE_LEFT, ({ tables, tableId }) => {
-        console.log(TABLE_LEFT, tables, tableId);
         setCurrentTable(null);
         loadUser(localStorage.token);
         setMessages([]);
@@ -81,7 +78,6 @@ const GameState = ({ history, children }) => {
   }, [socket]);
 
   const joinTable = (tableId) => {
-    console.log(JOIN_TABLE, tableId);
     socket.emit(JOIN_TABLE, tableId);
   };
 
@@ -114,7 +110,6 @@ const GameState = ({ history, children }) => {
 
   const addMessage = (message) => {
     setMessages((prevMessages) => [...prevMessages, message]);
-    console.log(message);
   };
 
   const fold = () => {
