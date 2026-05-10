@@ -1,0 +1,3 @@
+## 2024-05-18 - Deck shuffle and draw optimization
+**Learning:** Found that lodash.shuffle was being called 8 times to shuffle the deck, and drawing randomly spliced from the array. This O(n) multiple times operation plus O(n) per draw was redundant. Replaced with single Fisher-Yates and O(1) pop().
+**Action:** Always check if a library function like lodash.shuffle is misused or called unnecessarily in loops when native alternatives (like Fisher-Yates) might provide significant speedup. Ensure O(1) operations are preferred (e.g. pop) when drawing from a randomized collection. Be careful not to accidentally commit package-lock.json changes from testing/installing dependencies locally.
