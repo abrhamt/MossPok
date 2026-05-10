@@ -1,4 +1,3 @@
-const lodash = require('lodash');
 class Deck {
   constructor() {
     this.suits = ['s', 'h', 'd', 'c'];
@@ -29,8 +28,10 @@ class Deck {
       });
     });
 
-    for (let i = 0; i <= 7; i++) {
-      cards = lodash.shuffle(cards);
+    // Use Fisher-Yates shuffle algorithm for O(n) performance
+    for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
     }
 
     return cards;
@@ -42,8 +43,9 @@ class Deck {
 
   draw() {
     const count = this.count();
+    // Use pop() which is O(1) since the deck is already shuffled properly
     if (count > 0)
-      return this.cards.splice(Math.floor(Math.random() * count), 1)[0];
+      return this.cards.pop();
     else return null;
   }
 }
