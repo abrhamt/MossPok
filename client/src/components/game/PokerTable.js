@@ -11,4 +11,7 @@ const StyledPokerTable = styled.img`
 
 const PokerTable = () => <StyledPokerTable src={table} alt="Poker Table" />;
 
-export default PokerTable;
+// ⚡ Bolt Performance Optimization:
+// Wrapped the static PokerTable SVG component in React.memo so it does not
+// unnecessarily re-render whenever parent state (like the current bet) changes.
+export default React.memo(PokerTable);
