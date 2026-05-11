@@ -1,0 +1,3 @@
+## 2026-05-11 - [React.memo Optimization in Play.js]
+**Learning:** The `Play.js` component contains a `bet` state that frequently changes (e.g., when the user interacts with the bet slider). This causes the entire component to re-render, including child components like `PokerCard` (which is rendered up to 15 times on the table) and `PokerTable` (which is a static SVG).
+**Action:** Use `React.memo()` to wrap components that don't need to re-render when the parent's state changes. For components receiving object props (like `card` in `PokerCard`), provide a custom equality function to deeply compare the specific properties (`suit` and `rank`) to ensure memoization works correctly across re-renders.
