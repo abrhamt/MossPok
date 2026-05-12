@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import table from '../../assets/game/table.svg';
 
@@ -11,4 +11,5 @@ const StyledPokerTable = styled.img`
 
 const PokerTable = () => <StyledPokerTable src={table} alt="Poker Table" />;
 
-export default PokerTable;
+// ⚡ Bolt: Memoize PokerTable to prevent unnecessary re-renders. The table itself is static and never changes its props.
+export default memo(PokerTable);
