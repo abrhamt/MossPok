@@ -1,0 +1,3 @@
+## 2024-05-13 - [Memoize purely presentational game elements]
+**Learning:** Purely presentational child components (like individual cards in a deck or on a game board) often receive inline object props or arrays that change reference frequently, even if the underlying semantic data is exactly the same. This can lead to significant re-render cascades when parent state changes.
+**Action:** Use `React.memo` with a custom comparison function for such presentational components. Ensure the comparison checks semantic equality (e.g. `suit` and `rank`) rather than relying on standard object reference equality, avoiding unnecessary DOM diffs when parent game state changes.
