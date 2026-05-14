@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import cards from './cards';
 
@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// Optimization: Prevent unnecessary re-renders when parent components update
+// by deep-comparing the actual card values (suit and rank) rather than the object reference
+const propsAreEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default memo(PokerCard, propsAreEqual);
