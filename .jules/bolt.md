@@ -1,0 +1,3 @@
+## 2024-05-18 - React.memo with custom comparison for inline object props in game components
+**Learning:** Frontend game components like `PokerCard` frequently receive inline object props (e.g., `card: { suit, rank }`). These props change their reference on every render of the parent component, defeating default memoization or causing unnecessary re-renders. Standard shallow equality checks will fail because the reference is always new even if the object's contents are the same.
+**Action:** When making game components that receive complex objects as props, wrap them in `React.memo` but explicitly pass a custom equality function (e.g., `areEqual`) that compares the relevant properties of the object (like `suit` and `rank`) rather than relying on shallow comparison.
