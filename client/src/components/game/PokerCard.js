@@ -62,4 +62,17 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt Performance Optimization
+// PokerCard receives inline object props (card) that change reference on every parent render.
+// React.memo with a custom equality function prevents unnecessary re-renders when the actual card values haven't changed.
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areEqual);
