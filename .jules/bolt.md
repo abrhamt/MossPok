@@ -1,0 +1,3 @@
+## 2024-05-18 - [Preventing Unnecessary Re-renders in Presentational Game Components]
+**Learning:** In this codebase, frontend presentational game components (e.g., `PokerCard` inside `Hand` or the main board) frequently receive inline object props (like `card: { suit, rank }`). These object references change on every game state update or component render, causing widespread unnecessary re-renders of the DOM elements even when the underlying data hasn't changed.
+**Action:** Use `React.memo` with custom semantic comparison functions (e.g., explicitly checking `prevProps.card.suit === nextProps.card.suit`) for leaf presentational components to break the re-render chain.

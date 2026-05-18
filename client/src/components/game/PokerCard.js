@@ -62,4 +62,18 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Added React.memo with a custom comparison function.
+// 🎯 Why: The `card` prop is often passed down as a new inline object reference, causing
+// unnecessary re-renders of the PokerCard component even when the actual card suit and rank
+// haven't changed.
+// 📊 Impact: Significantly reduces React re-renders for presentational game components
+// like Hand and Board during gameplay updates.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
