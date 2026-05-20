@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Memoize PokerCard to prevent unnecessary re-renders.
+// The `card` prop is often an inline object or changes reference frequently
+// during websocket state updates (e.g. betting, turn changes) in parent components (Play, Seat).
+// This custom comparison function ensures we only re-render if the actual card value or size changes.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
