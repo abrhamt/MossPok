@@ -1,0 +1,3 @@
+## 2024-05-22 - Object Reference Changes in Game Components
+**Learning:** In the `mosspok` app, presentational game components (like `PokerCard` or `Seat`) often receive inline object props (e.g., `card`, `seat`) that change their reference on every game state update (e.g. from Socket.io events or intervals). This causes unnecessary re-renders across the entire table.
+**Action:** When working on game UI components that receive frequently updated objects, wrap them in `React.memo` with a custom equality function. The equality function should deeply compare the actual semantic values (e.g. `suit` and `rank` for cards) instead of relying on reference equality.
