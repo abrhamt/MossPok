@@ -1,0 +1,3 @@
+## 2024-05-16 - Inline Object Props in Game Components
+**Learning:** Frontend presentational game components (like `PokerCard` which receives inline object props for the `card` that represents rank/suit) often experience unnecessary re-renders because the object reference changes frequently on game updates, even if the underlying suit and rank remain identical.
+**Action:** Always wrap presentational game components that accept object props with `React.memo` and provide a custom semantic comparison function (e.g., checking `suit` and `rank` properties) to ensure components only re-render when the actual displayed data changes.
