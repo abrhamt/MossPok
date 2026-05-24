@@ -1,0 +1,3 @@
+## 2024-05-24 - [React.memo Custom Equality Function for Presentational Components]
+**Learning:** Presentational components like `PokerCard` frequently receive inline object props (e.g., `card={{ suit, rank }}`) from parents like `Seat.js`. This breaks standard `React.memo` shallow comparison, causing unnecessary re-renders of the cards every time the parent re-renders.
+**Action:** Always provide a custom semantic comparison function (like `areEqual`) to `React.memo` when a component relies on inline object props, comparing the specific primitives inside the object rather than the object reference itself.
