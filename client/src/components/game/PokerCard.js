@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// Custom comparison function for React.memo to prevent unnecessary re-renders
+// especially when the card object reference changes but its values remain the same.
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areEqual);
