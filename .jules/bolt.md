@@ -1,0 +1,3 @@
+## 2024-05-28 - React.memo Optimization for Presentational Game Components
+**Learning:** In this codebase's architecture, presentational game components (like `PokerCard`) frequently receive inline object props (e.g., `card={{ suit: 's', rank: 'A' }}`). Even if the actual data is the same, the object reference changes on every parent render, leading to unnecessary re-renders during gameplay state updates.
+**Action:** When working with presentational components in the frontend, utilize `React.memo` paired with a custom semantic comparison function to prevent these unnecessary re-renders. Ensure the comparison deeply checks primitive values like suit and rank, rather than relying on standard reference equality.
