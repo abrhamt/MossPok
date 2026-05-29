@@ -1,0 +1,3 @@
+## 2024-06-25 - Prevent re-renders on inline object props
+**Learning:** Frontend presentational game components (e.g., `PokerCard`) often receive inline object props (like `card={{ suit, rank }}`) that change reference frequently, causing unnecessary React re-renders. Standard shallow equality checks (like default `React.memo` or `PureComponent`) fail to prevent these.
+**Action:** Use `React.memo` with custom semantic comparison functions (like explicitly checking `prevProps.card.suit === nextProps.card.suit`) for presentational components that receive inline complex objects where the underlying values are what matter.
