@@ -62,4 +62,15 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Memoize PokerCard with semantic comparison
+// Prevents unnecessary re-renders when inline object props (like 'card')
+// change reference but the semantic values (suit and rank) remain identical.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
