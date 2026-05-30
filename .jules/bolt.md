@@ -1,0 +1,3 @@
+## 2024-05-24 - Memoizing Presentational Game Components with Inline Object Props
+**Learning:** Presentational components in this codebase (like PokerCard) frequently receive inline object props (e.g., `card={{ suit, rank }}`) which change reference on parent renders, leading to unnecessary re-renders even when the underlying data is identical.
+**Action:** Always wrap such presentational game components in `React.memo` using a custom comparison function that checks the semantic values of the objects (like suit and rank) rather than relying on default shallow comparison, ensuring rendering is decoupled from pure reference changes.
