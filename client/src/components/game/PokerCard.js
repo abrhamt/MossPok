@@ -62,4 +62,19 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt Performance Optimization:
+// Wrap PokerCard in React.memo with a custom comparison function.
+// Since 'card' is often passed as an inline object prop that changes reference
+// on every render, we do a semantic comparison of suit, rank, and dimensions
+// to prevent unnecessary re-renders when the actual card values haven't changed.
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areEqual);
