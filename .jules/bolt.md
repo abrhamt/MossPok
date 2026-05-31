@@ -1,0 +1,3 @@
+## 2024-05-15 - React.memo usage for Inline Object Props
+**Learning:** In presentational leaf components like `PokerCard`, props such as `card` are often passed as inline objects (e.g., `<PokerCard card={{ suit, rank }} ... />` from mapping over an array or derived state). This causes referential inequality on every render, defeating standard React optimizations and forcing frequent re-renders in visually busy parts of the app like the poker table.
+**Action:** When optimizing leaf components that receive object/array props, assume referential inequality by default and implement custom comparison functions in `React.memo` (e.g., comparing semantic values like `prevProps.card?.suit === nextProps.card?.suit`) to effectively prevent unnecessary re-renders.
