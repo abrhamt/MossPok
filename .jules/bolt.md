@@ -1,0 +1,3 @@
+## 2024-06-01 - Prevent unnecessary re-renders in presentational game components
+**Learning:** In the Mosspok application, game state components (like PokerCard) frequently receive new object references as props (e.g., inline `card` objects) during state updates, causing widespread unnecessary re-renders in the React tree even when the data itself hasn't changed.
+**Action:** Always wrap presentational components that receive complex objects (like cards, seats) with `React.memo` and provide a custom semantic comparison function to evaluate actual values (e.g., `suit` and `rank`) rather than relying on strict referential equality.
