@@ -62,4 +62,15 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Prevent unnecessary re-renders when parent components pass new object references for the same card
+// Impact: Reduces re-renders of presentational game components
+// Measurement: Use React Profiler to verify that PokerCard does not re-render if its semantic props (suit, rank, dimensions) haven't changed.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
