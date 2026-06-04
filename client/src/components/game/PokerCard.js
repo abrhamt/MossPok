@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Performance optimization
+// Presentational game components often receive inline object props (like 'card')
+// that change reference frequently but contain the same values.
+// We use React.memo with a custom comparison function to prevent unnecessary re-renders.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
