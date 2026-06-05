@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Optimize by preventing re-renders when inline object props (like 'card')
+// change reference but keep the same values. This is common when arrays map over hands.
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areEqual);
