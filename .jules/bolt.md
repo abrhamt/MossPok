@@ -1,0 +1,3 @@
+## 2024-06-25 - React.memo with custom comparison for inline object props in presentational components
+**Learning:** Frontend presentational game components (e.g., `PokerCard`) frequently receive inline object props (like `card={{ suit: 's', rank: 'A' }}`) that change referential equality on every render, causing unnecessary re-renders of child components even if semantic data hasn't changed.
+**Action:** Use `React.memo` with a custom comparison function to check the semantic values of object props (e.g., checking `suit` and `rank` for cards) to prevent these unnecessary re-renders and improve frontend performance.
