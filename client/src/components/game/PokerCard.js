@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Prevent unnecessary re-renders when card object reference changes
+// but the semantic value (suit, rank) and other props remain the same.
+const propsAreEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, propsAreEqual);
