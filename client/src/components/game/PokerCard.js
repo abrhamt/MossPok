@@ -48,7 +48,7 @@ const StyledPokerCardWrapper = styled.div`
   }
 `;
 
-const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
+const PokerCard = React.memo(({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   const concat = suit + rank;
 
   return (
@@ -60,6 +60,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
       <img src={cards[concat]} alt={concat} />
     </StyledPokerCardWrapper>
   );
-};
+}, (prevProps, nextProps) => {
+  // Custom comparison function to prevent unnecessary re-renders
+  // since `card` prop is often an inline object that changes reference
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
 
 export default PokerCard;
