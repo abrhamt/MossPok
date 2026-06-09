@@ -62,4 +62,17 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Custom comparison function to prevent unnecessary re-renders when inline
+// object props (like 'card') change reference but contain the same logical values (suit and rank).
+// Expected Impact: Reduces unnecessary React re-renders for every card on the table when global game state updates
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card?.suit === nextProps.card?.suit &&
+    prevProps.card?.rank === nextProps.card?.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areEqual);
