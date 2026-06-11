@@ -62,4 +62,15 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// Bolt: Memoize component with custom comparison to avoid re-renders
+// caused by new object references for the `card` prop, common in this codebase.
+// This semantic comparison checks primitive props to accurately prevent rendering identical cards.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
