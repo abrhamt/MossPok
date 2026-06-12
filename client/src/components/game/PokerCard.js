@@ -62,4 +62,18 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt Performance Optimization:
+// PokerCard receives new object references for `card` on every render of Hand/Seat.
+// We use a custom comparison function to check semantic equality (suit and rank)
+// rather than referential equality to avoid unnecessary re-renders.
+const areCardsEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+};
+
+export default React.memo(PokerCard, areCardsEqual);

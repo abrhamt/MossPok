@@ -1,0 +1,3 @@
+## 2026-06-12 - Prevent Re-renders on New Object Reference in React Game Components
+**Learning:** Game components like `PokerCard` frequently receive new inline object props (e.g. `card={{ suit: "Hearts", rank: "A" }}`) during game loops and seat state updates, changing their referential equality even if the semantic value stays identical.
+**Action:** Always use `React.memo` with a custom semantic comparison function (like checking specific attributes such as `suit` and `rank`) on presentational game components rather than relying on shallow comparison to prevent massive unnecessary re-render trees.
