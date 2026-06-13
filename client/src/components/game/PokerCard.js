@@ -62,4 +62,16 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt Optimization: Added React.memo with a custom equality function
+// to prevent unnecessary re-renders. Game components often receive inline
+// object props (like `card`) that change references frequently but have identical
+// contents. This reduces React render cycles significantly for players' hands.
+export default React.memo(PokerCard, (prevProps, nextProps) => {
+  return (
+    prevProps.card.suit === nextProps.card.suit &&
+    prevProps.card.rank === nextProps.card.rank &&
+    prevProps.width === nextProps.width &&
+    prevProps.minWidth === nextProps.minWidth &&
+    prevProps.maxWidth === nextProps.maxWidth
+  );
+});
