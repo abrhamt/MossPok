@@ -62,4 +62,33 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+/*
+ * ⚡ Bolt Performance Optimization
+ * Memoize the PokerCard component to prevent unnecessary re-renders.
+ * The `card` prop is often an inline object that changes reference frequently.
+ * We deep compare the `card` object (suit and rank) and shallow compare the rest of the props dynamically.
+ * Expected Impact: Reduces React re-renders for every player's cards during game state updates.
+ */
+const areEqual = (prevProps, nextProps) => {
+  // Deep compare the nested 'card' object
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  // Shallow compare the remaining props dynamically to avoid brittleness
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let key of prevKeys) {
+    if (prevProps[key] !== nextProps[key]) return false;
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
