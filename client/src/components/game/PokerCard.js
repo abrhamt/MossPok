@@ -62,4 +62,29 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// Custom comparison function for React.memo to prevent unnecessary re-renders.
+// It deep compares the specific nested 'card' object (suit and rank) and performs
+// a dynamic shallow comparison for all other props.
+const areEqual = (prevProps, nextProps) => {
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  const prevKeys = Object.keys(prevProps);
+  const nextKeys = Object.keys(nextProps);
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let key of prevKeys) {
+    if (key !== 'card' && prevProps[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
