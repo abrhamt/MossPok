@@ -1,0 +1,3 @@
+## 2024-05-18 - Memoizing Components with Inline Object Props
+**Learning:** Presentational components in the game frontend, such as `PokerCard`, often receive inline object props (like `card={{ suit, rank }}`) which change reference on every render, causing React to unnecessarily re-render the component even when the actual data hasn't changed.
+**Action:** Use `React.memo` with custom comparison functions (`areEqual`) for components receiving inline object props. Deeply compare specific nested objects (like `card`) while dynamically shallow comparing other props (e.g., via `Object.keys()`) to prevent brittle memoization when new props are added.
