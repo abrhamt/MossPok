@@ -1,0 +1,3 @@
+## 2024-06-21 - [Presentational Components and Object Props]
+**Learning:** In the mosspok codebase, presentational game components (like `PokerCard`) often receive inline object props (e.g., `{ suit, rank }`) that are recreated frequently by the parent component on every render, causing unnecessary and expensive re-renders.
+**Action:** When working with presentational components that receive objects as props, wrap them in `React.memo` and provide a custom `areEqual` function. The `areEqual` function should deep compare the specific nested object properties (e.g., `card.suit` and `card.rank`) and use a dynamic shallow comparison (`Object.keys()`) for the remaining props to be robust and future-proof.
