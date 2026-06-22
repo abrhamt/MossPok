@@ -1,0 +1,3 @@
+## 2026-06-22 - Optimizing Frequent Re-renders for Presentational Components Receiving New Object References
+**Learning:** Frontend presentational game components (like PokerCard) often receive inline object props (e.g. `card={{ suit, rank }}`) which change reference on every parent render, leading to massive unnecessary re-rendering across the component tree.
+**Action:** Use `React.memo` with a custom deep comparison function for these nested object properties while retaining dynamic shallow checking for all other props to safely limit excessive renders without making the memoization brittle.
