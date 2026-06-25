@@ -62,4 +62,32 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+/*
+ * ⚡ Bolt Performance Optimization:
+ * Added React.memo with a custom comparison function.
+ * The `card` prop is often an inline object that changes reference across renders.
+ * This function compares the deep primitive values of `card.suit` and `card.rank`
+ * and shallow-compares the remaining props dynamically.
+ * Impact: Prevents unnecessary re-renders of the PokerCard component, improving rendering performance during game state updates.
+ */
+const areEqual = (prevProps, nextProps) => {
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (const key of prevKeys) {
+    if (prevProps[key] !== nextProps[key]) return false;
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
