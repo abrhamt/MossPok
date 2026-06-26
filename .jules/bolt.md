@@ -1,0 +1,3 @@
+## 2024-05-18 - Memoizing PokerCard props in mosspok
+**Learning:** Frontend presentational game components (like PokerCard) often receive inline object props that change reference frequently, causing unnecessary re-renders. Standard React.memo is insufficient due to these shifting object references.
+**Action:** When memoizing components that receive inline objects (e.g. `card={card}`), always use React.memo with a custom semantic comparison function that explicitly checks relevant fields (e.g., `suit` and `rank`) and dynamically checks the rest to prevent the memoization from being brittle to future prop additions.

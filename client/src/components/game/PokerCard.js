@@ -62,4 +62,28 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Performance Optimization
+// Expected Impact: Reduces unnecessary re-renders of the PokerCard component.
+// The Seat component often passes inline objects or arrays, causing reference checks to fail.
+// This custom comparison deeply checks the `card` object (suit, rank) and shallow checks remaining props.
+const areEqual = (prevProps, nextProps) => {
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  const prevKeys = Object.keys(prevProps).filter(k => k !== 'card');
+  const nextKeys = Object.keys(nextProps).filter(k => k !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let key of prevKeys) {
+    if (prevProps[key] !== nextProps[key]) return false;
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
