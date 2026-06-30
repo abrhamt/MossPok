@@ -62,4 +62,38 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+/**
+ * ⚡ Bolt Performance Optimization
+ * 💡 What: Added React.memo with a custom areEqual function.
+ * 🎯 Why: PokerCard often receives a new inline object for the \`card\` prop on every render from parent components, causing unnecessary re-renders of all cards on the table.
+ * 📊 Impact: Significantly reduces React render cycles when the game state updates but a specific card hasn't changed.
+ * 🔬 Measurement: Observe reduced component re-renders in React DevTools Profiler during game state updates.
+ */
+const areEqual = (prevProps, nextProps) => {
+  // Deep compare the nested card object
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  // Dynamic shallow comparison for all other props to avoid brittleness
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) {
+    return false;
+  }
+
+  for (let i = 0; i < prevKeys.length; i++) {
+    const key = prevKeys[i];
+    if (prevProps[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);

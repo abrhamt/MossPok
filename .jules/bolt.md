@@ -1,0 +1,3 @@
+## 2024-06-30 - Robust Memoization for Components with Nested Object Props
+**Learning:** When using `React.memo` with a custom `areEqual` function for components that receive nested object props (like the `card` object in `PokerCard`), hardcoding every single prop name for comparison makes the memoization brittle. If new props are added later, the `areEqual` function won't check them, potentially causing stale renders.
+**Action:** Explicitly deep-compare the specific nested objects (e.g., `prevProps.card?.suit !== nextProps.card?.suit`), and use a dynamic shallow comparison (e.g., via `Object.keys().filter()`) for all other remaining props. This ensures the component avoids unnecessary re-renders while remaining robust to future prop additions.
