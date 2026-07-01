@@ -62,4 +62,32 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+/**
+ * ⚡ Optimization: React.memo with custom areEqual function
+ * Prevents unnecessary re-renders when parent component (e.g. Seat) re-renders
+ * and passes a new object reference for the `card` prop, even if its contents
+ * (suit, rank) are identical.
+ */
+const areEqual = (prevProps, nextProps) => {
+  // Deep compare the `card` object
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  // Dynamic shallow comparison for all other props to ensure robustness against future prop additions
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let key of prevKeys) {
+    if (prevProps[key] !== nextProps[key]) return false;
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
