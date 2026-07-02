@@ -62,4 +62,32 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// ⚡ Bolt: Custom comparison function to prevent unnecessary re-renders
+// Deep compares the nested 'card' object (suit, rank) which often changes reference,
+// while dynamically shallow comparing the rest of the props.
+const areEqual = (prevProps, nextProps) => {
+  // Deep compare the card object
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  // Shallow compare remaining props dynamically
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let i = 0; i < prevKeys.length; i++) {
+    const key = prevKeys[i];
+    if (prevProps[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export default React.memo(PokerCard, areEqual);
