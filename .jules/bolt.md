@@ -1,0 +1,3 @@
+## 2024-05-19 - React.memo with Custom Deep/Shallow Comparison
+**Learning:** When applying `React.memo` to presentational components (like `PokerCard`) that receive inline object props (e.g., `card={{ suit, rank }}`), the default shallow comparison causes frequent unnecessary re-renders because object references change. Hardcoding prop names in custom comparison functions makes them brittle to future prop additions.
+**Action:** Use a custom comparison function that deep compares specific nested objects (like the `card` prop) and performs a dynamic shallow comparison via `Object.keys()` for all other props. This ensures performance without compromising maintainability.

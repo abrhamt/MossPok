@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import cards from './cards';
 
@@ -48,7 +48,7 @@ const StyledPokerCardWrapper = styled.div`
   }
 `;
 
-const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
+const PokerCardComponent = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   const concat = suit + rank;
 
   return (
@@ -61,5 +61,33 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
     </StyledPokerCardWrapper>
   );
 };
+
+// Custom comparison function for React.memo to prevent unnecessary re-renders
+// Deep compares the 'card' prop and shallow compares the rest dynamically
+const areEqual = (prevProps, nextProps) => {
+  // Deep compare the card object
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  // Shallow compare all other props dynamically to avoid brittleness
+  const prevKeys = Object.keys(prevProps).filter((key) => key !== 'card');
+  const nextKeys = Object.keys(nextProps).filter((key) => key !== 'card');
+
+  if (prevKeys.length !== nextKeys.length) return false;
+
+  for (let key of prevKeys) {
+    if (prevProps[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const PokerCard = memo(PokerCardComponent, areEqual);
 
 export default PokerCard;
