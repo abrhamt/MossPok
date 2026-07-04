@@ -1,0 +1,3 @@
+## 2024-07-04 - [React.memo with dynamic shallow compare for inline object props]
+**Learning:** Frontend presentational game components (like `PokerCard`) often receive inline object props (like `card={{ suit, rank }}`) that change reference on every render, causing unnecessary re-renders. A custom `areEqual` function is required. However, hardcoding prop names in `areEqual` makes memoization brittle to future additions.
+**Action:** Use `React.memo` with a custom `areEqual` function that deep compares specific nested objects (like `card`), and dynamically shallow compares all other props using `Object.keys()` to prevent brittle memoization when new props are added.
