@@ -1,0 +1,3 @@
+## 2024-05-24 - Dynamic Shallow Comparison for React.memo
+**Learning:** When writing custom `areEqual` functions for `React.memo`, hardcoding every prop name makes the memoization brittle to future prop additions. The frontend presentational game components (e.g., PokerCard) often receive inline object props that change reference frequently, like the `card` object.
+**Action:** Deep compare specific nested objects (like `card`) and use a dynamic shallow comparison (e.g., via `Object.keys()`) for the remaining props to ensure the memoization remains effective and resilient to future prop additions.
