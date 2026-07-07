@@ -1,0 +1,3 @@
+## 2024-05-19 - React.memo with dynamic shallow comparison for dynamic props
+**Learning:** When using React.memo for components that receive nested object props (e.g. `card: {suit, rank}` in PokerCard) along with other shallow props, hardcoding all other props in the `areEqual` function can lead to brittle optimization. If new props are added, they would be ignored in comparison.
+**Action:** Use a dynamic shallow comparison strategy with `Object.keys()` for non-nested props, combined with specific deep comparison for the complex object. This makes memoization resilient to future prop additions.
