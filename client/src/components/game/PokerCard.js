@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import cards from './cards';
 
@@ -62,4 +62,31 @@ const PokerCard = ({ card: { suit, rank }, width, minWidth, maxWidth }) => {
   );
 };
 
-export default PokerCard;
+// Optimization: Prevent unnecessary re-renders of presentational cards
+// by deep comparing the nested 'card' object (suit and rank) and
+// shallow comparing the rest of the props dynamically to remain robust.
+const arePropsEqual = (prevProps, nextProps) => {
+  if (
+    prevProps.card?.suit !== nextProps.card?.suit ||
+    prevProps.card?.rank !== nextProps.card?.rank
+  ) {
+    return false;
+  }
+
+  const prevKeys = Object.keys(prevProps);
+  const nextKeys = Object.keys(nextProps);
+
+  if (prevKeys.length !== nextKeys.length) {
+    return false;
+  }
+
+  for (let key of prevKeys) {
+    if (key !== 'card' && prevProps[key] !== nextProps[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export default memo(PokerCard, arePropsEqual);
